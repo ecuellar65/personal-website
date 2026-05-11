@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--The <title> tag is the name that shows up in the browser tab-->
+  <title>Erik Cuellar's Webpage</title>
+
+  <!--This line connects our HTML page to a separate CSS file called style.css.
+      CSS controls how the page looks (colors, fonts, spacing).
+      Keeping CSS in its own file is a best practice—it keeps HTML clean.-->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!--This is the title at the top of the page-->
+  <h1 class="page-title">Erik Cuellar's Webpage</h1>
+
+  <!--Three photos in a horizontal row.
+      The middle one is NOT actually me—see the caption below.
+      Lesson for class: alt text should always be honest about what an image is.-->
+  <div class="photo-row">
+    <img class="row-photo"
+         alt="Photo of Erik standing in front of the UT tower"
+         src="A39A9983-652B-4A71-B5FC-BD0733D00470.JPEG" />
+    <img class="row-photo"
+         alt="Erik's nephew laying down on a snooker table"
+         src="IMG_0790.JPEG" />
+    <img class="row-photo"
+         alt="Erik paddle boarding in Lake Austin"
+         src="IMG_1001.JPEG" />
+  </div>
+  <p class="caption">
+    <em>The UT tower, my nephew, and me paddle boarding.
+    </em>
+  </p>
+
+  <!--This is the About Me paragraph-->
+  <p class="about-me">
+    Hi my name is Erik Cuellar and I am a student in the McCombs School of Business.
+	I'm currently exploring many different careers in business mostly in the accounting or finance industries. 
+	I like working with numbers and data in order to help businesses grow. Besides my professional interests I also like to 
+	spend my free time drumming and watching/playing soccer. My favorite soccer team is Real Madrid.
+  </p>
+
+  <hr />
+
+  <!--Work experience as a bulleted list-->
+  <h3>My Work Experience</h3>
+  <ul>
+	<li><strong>Expedition EY</strong> &mdash; Pariticipant (Spring 2026)</li>
+	<li><strong>George P. Johnson Marketing Case Competition</strong> &mdash; Presenter (Spring 2026)</li>
+    <li><strong>University Housing and Dining</strong> &mdash; Student Dining Assistant (2025 &ndash; Present)</li>
+    <li><strong>CAPE Club</strong> &mdash; Tutor (2023 &ndash; 2025)</li>
+  </ul>
+
+  <hr />
+
+  <!--My Favorite Things: a bulleted list of links-->
+  <h3>My Favorite Things</h3>
+  <ul>
+    <li><a href="https://www.nbc.com/the-office" target="_blank">The Office</a> &mdash; One of my favorite TV shows and if you haven't watched it you're missing out</li>
+    <li><a href="https://www.realmadrid.com/en-US" target="_blank">Real Madrid</a> &mdash; Best team in the world trust</li>
+    <li><a href="https://www.youtube.com/watch?v=IKSvCq0HuH8" target="_blank">2024 Phantom Regiment (I just like this show) </li>
+  </ul>
+
+  <hr />
+
+  <!--YouTube videos: each one is an iframe.
+      Tip for students: to add your own, go to YouTube > Share > Embed,
+      and copy the FULL iframe tag.-->
+  <h3>Random fun thing about me</h3>
+
+  <div class="video-grid">
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zeqvtrpzej4?si=8N7cJe4z2FzXVga7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+  </div>
+
+  <hr />
+
+  <!--Contact section.
+      The mailto: link opens the user's email program.
+      LinkedIn opens in a new tab.-->
+  <h3>Contact Me</h3>
+  <p class="contact-line">
+    <a href="mailto:ecuellar65@outlook.com">ecuellar65@outlook.com</a>
+    &nbsp;|&nbsp;
+    <a href="https://www.linkedin.com/in/erikcuellar/" target="_blank">My LinkedIn Profile</a>
+  </p>
+
+  <!--Footer with copyright-->
+  <footer class="page-footer">
+    Copyright &copy; 2026 Erik Cuellar. All Rights Reserved.
+  </footer>
+
+</body>
+</html>
