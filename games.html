@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Games – Erik Cuellar</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── Navigation Bar (same as index) ── */
+    .site-nav {
+      background: #14213D;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 16px 22px;
+      letter-spacing: 0.03em;
+      transition: background 0.18s;
+      border-bottom: 3px solid transparent;
+      display: inline-block;
+    }
+    .site-nav a:hover {
+      background: rgba(255,255,255,0.12);
+      border-bottom: 3px solid #fff;
+    }
+    .site-nav a.active {
+      background: rgba(255,255,255,0.18);
+      border-bottom: 3px solid #fff;
+    }
+    .site-nav .nav-brand {
+      font-family: 'Georgia', serif;
+      color: #fff;
+      font-size: 1.1rem;
+      margin-right: 16px;
+      opacity: 0.85;
+      font-style: italic;
+      padding: 16px 0;
+    }
+
+    /* ── Page Layout ── */
+    body {
+      font-family: Georgia, serif;
+      background: #faf8f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .games-header {
+      text-align: center;
+      padding: 36px 20px 8px;
+    }
+    .games-header h1 {
+      font-size: 2rem;
+      color: #bf5700;
+      margin-bottom: 6px;
+    }
+    .games-header p {
+      color: #555;
+      font-style: italic;
+      margin: 0;
+    }
+
+    /* ── Tic-Tac-Toe ── */
+    .ttt-container {
+      max-width: 420px;
+      margin: 32px auto 48px;
+      padding: 28px 28px 32px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      text-align: center;
+    }
+    .ttt-container h2 {
+      font-size: 1.4rem;
+      color: #333;
+      margin: 0 0 6px;
+    }
+
+    /* Player name inputs */
+    .player-names {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .player-names label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #666;
+      gap: 4px;
+    }
+    .player-names input {
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 0.95rem;
+      font-family: Georgia, serif;
+      width: 120px;
+      text-align: center;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .player-names input:focus { border-color: #bf5700; }
+    .player-x input:focus    { border-color: #bf5700; }
+    .player-o input:focus    { border-color: #1a6ea8; }
+
+    /* Status message */
+    #status {
+      font-size: 1.05rem;
+      font-weight: bold;
+      min-height: 28px;
+      margin-bottom: 16px;
+      color: #333;
+      transition: color 0.2s;
+    }
+    #status.x-turn  { color: #bf5700; }
+    #status.o-turn  { color: #1a6ea8; }
+    #status.winner  { color: #2a7a2a; font-size: 1.15rem; }
+    #status.draw    { color: #888; }
+
+    /* Score board */
+    .scoreboard {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .score-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .score-item .score-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .score-item .score-num   { font-size: 1.6rem; font-weight: bold; line-height: 1; }
+    .score-x .score-num  { color: #bf5700; }
+    .score-o .score-num  { color: #1a6ea8; }
+    .score-draws .score-num { color: #999; }
+
+    /* The 3×3 board */
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 110px);
+      grid-template-rows: repeat(3, 110px);
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .cell {
+      background: #f5f2ec;
+      border: 2px solid #e0dbd0;
+      border-radius: 10px;
+      font-size: 3rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, transform 0.1s, border-color 0.15s;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .cell:hover:not(.taken) {
+      background: #ede9df;
+      border-color: #bf5700;
+      transform: scale(1.04);
+    }
+    .cell.taken { cursor: default; }
+    .cell.x-mark { color: #bf5700; }
+    .cell.o-mark { color: #1a6ea8; }
+    .cell.winning-cell {
+      background: #fff3e0;
+      border-color: #bf5700;
+      animation: pulse-win 0.5s ease;
+    }
+    .cell.o-win.winning-cell {
+      background: #e3f0fb;
+      border-color: #1a6ea8;
+    }
+
+    @keyframes pulse-win {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    /* Pop-in animation for marks */
+    @keyframes pop-in {
+      0%   { transform: scale(0.3); opacity: 0; }
+      70%  { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    .cell-mark {
+      display: inline-block;
+      animation: pop-in 0.22s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    /* Buttons */
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .btn {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 7px;
+      font-family: Georgia, serif;
+      font-size: 0.95rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.1s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: #14213D;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #a04800; }
+    .btn-secondary {
+      background: #eee;
+      color: #555;
+    }
+    .btn-secondary:hover { background: #ddd; }
+
+    /* Footer */
+    .page-footer {
+      text-align: center;
+      color: #aaa;
+      font-size: 0.8rem;
+      padding: 16px;
+      font-family: Georgia, serif;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <span class="nav-brand">🤘 Erik Cuellar</span>
+    <a href="index.html">Home</a>
+    <a href="games.html" class="active">Games</a>
+  </nav>
+
+  <div class="games-header">
+    <h1>🎮 Games</h1>
+    <p>Take a break and play with a friend!</p>
+  </div>
+
+  <div class="ttt-container">
+    <h2>Tic-Tac-Toe</h2>
+
+    <div class="player-names">
+      <label class="player-x">
+        Player X
+        <input type="text" id="name-x" value="Player X" maxlength="12" />
+      </label>
+      <label class="player-o">
+        Player O
+        <input type="text" id="name-o" value="Player O" maxlength="12" />
+      </label>
+    </div>
+
+    <div class="scoreboard">
+      <div class="score-item score-x">
+        <span class="score-label" id="label-x">Player X</span>
+        <span class="score-num" id="score-x">0</span>
+      </div>
+      <div class="score-item score-draws">
+        <span class="score-label">Draws</span>
+        <span class="score-num" id="score-draws">0</span>
+      </div>
+      <div class="score-item score-o">
+        <span class="score-label" id="label-o">Player O</span>
+        <span class="score-num" id="score-o">0</span>
+      </div>
+    </div>
+
+    <div id="status" class="x-turn"></div>
+
+    <div class="board" id="board">
+      <div class="cell" data-index="0"></div>
+      <div class="cell" data-index="1"></div>
+      <div class="cell" data-index="2"></div>
+      <div class="cell" data-index="3"></div>
+      <div class="cell" data-index="4"></div>
+      <div class="cell" data-index="5"></div>
+      <div class="cell" data-index="6"></div>
+      <div class="cell" data-index="7"></div>
+      <div class="cell" data-index="8"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-new-round">New Round</button>
+      <button class="btn btn-secondary" id="btn-reset-scores">Reset Scores</button>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    Copyright &copy; 2026 Erik Cuellar. All Rights Reserved.
+  </footer>
+
+  <script>
+    const WINS = [
+      [0,1,2],[3,4,5],[6,7,8], // rows
+      [0,3,6],[1,4,7],[2,5,8], // cols
+      [0,4,8],[2,4,6]          // diagonals
+    ];
+
+    let board       = Array(9).fill(null);
+    let current     = 'X';
+    let gameOver    = false;
+    let scores      = { X: 0, O: 0, D: 0 };
+
+    const cells     = document.querySelectorAll('.cell');
+    const statusEl  = document.getElementById('status');
+    const scoreX    = document.getElementById('score-x');
+    const scoreO    = document.getElementById('score-o');
+    const scoreD    = document.getElementById('score-draws');
+    const labelX    = document.getElementById('label-x');
+    const labelO    = document.getElementById('label-o');
+    const nameX     = document.getElementById('name-x');
+    const nameO     = document.getElementById('name-o');
+
+    function getName(player) {
+      return player === 'X'
+        ? (nameX.value.trim() || 'Player X')
+        : (nameO.value.trim() || 'Player O');
+    }
+
+    function updateLabels() {
+      labelX.textContent = getName('X');
+      labelO.textContent = getName('O');
+    }
+
+    function setStatus(msg, cls) {
+      statusEl.textContent = msg;
+      statusEl.className = cls;
+    }
+
+    function checkWinner() {
+      for (const [a,b,c] of WINS) {
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+          return { winner: board[a], line: [a,b,c] };
+        }
+      }
+      if (board.every(Boolean)) return { winner: null, line: [] };
+      return null;
+    }
+
+    function highlightWin(line, winner) {
+      line.forEach(i => {
+        cells[i].classList.add('winning-cell');
+        if (winner === 'O') cells[i].classList.add('o-win');
+      });
+    }
+
+    function handleClick(e) {
+      const idx = parseInt(e.currentTarget.dataset.index);
+      if (gameOver || board[idx]) return;
+
+      board[idx] = current;
+      e.currentTarget.innerHTML = `<span class="cell-mark">${current}</span>`;
+      e.currentTarget.classList.add('taken', current === 'X' ? 'x-mark' : 'o-mark');
+
+      const result = checkWinner();
+      if (result) {
+        gameOver = true;
+        if (result.winner) {
+          highlightWin(result.line, result.winner);
+          scores[result.winner]++;
+          updateScoreDisplay();
+          setStatus(`🎉 ${getName(result.winner)} wins!`, 'winner');
+        } else {
+          scores.D++;
+          updateScoreDisplay();
+          setStatus("It's a draw!", 'draw');
+        }
+      } else {
+        current = current === 'X' ? 'O' : 'X';
+        setStatus(`${getName(current)}'s turn (${current})`, current === 'X' ? 'x-turn' : 'o-turn');
+      }
+    }
+
+    function updateScoreDisplay() {
+      scoreX.textContent = scores.X;
+      scoreO.textContent = scores.O;
+      scoreD.textContent = scores.D;
+    }
+
+    function newRound() {
+      board    = Array(9).fill(null);
+      current  = 'X';
+      gameOver = false;
+      cells.forEach(c => {
+        c.innerHTML = '';
+        c.className = 'cell';
+      });
+      updateLabels();
+      setStatus(`${getName('X')}'s turn (X)`, 'x-turn');
+    }
+
+    cells.forEach(c => c.addEventListener('click', handleClick));
+    document.getElementById('btn-new-round').addEventListener('click', newRound);
+    document.getElementById('btn-reset-scores').addEventListener('click', () => {
+      scores = { X: 0, O: 0, D: 0 };
+      updateScoreDisplay();
+      newRound();
+    });
+    nameX.addEventListener('input', () => { updateLabels(); if (!gameOver) setStatus(`${getName(current)}'s turn (${current})`, current === 'X' ? 'x-turn' : 'o-turn'); });
+    nameO.addEventListener('input', () => { updateLabels(); if (!gameOver) setStatus(`${getName(current)}'s turn (${current})`, current === 'X' ? 'x-turn' : 'o-turn'); });
+
+    // Init
+    updateLabels();
+    setStatus(`${getName('X')}'s turn (X)`, 'x-turn');
+  </script>
+
+</body>
+</html>
