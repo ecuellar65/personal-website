@@ -10,7 +10,7 @@
 
 /* ---- Page basics ---- */
 body {
-  background-color: blue;          /* burnt orange background */
+  background-color: red;          /* burnt orange background */
   color: #14213D;                     /* navy text for contrast  */
   font-family: Sans-serif, "Roboto", serif;
   max-width: 900px;
