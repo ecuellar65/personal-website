@@ -12,7 +12,7 @@
 body {
   background-color: blue;          /* burnt orange background */
   color: #14213D;                     /* navy text for contrast  */
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: Sans-serif, "Roboto", serif;
   max-width: 900px;
   margin: 0 auto;                     /* centers the whole page  */
   padding: 30px 20px;
@@ -23,11 +23,11 @@ body {
 .page-title {
   text-align: center;
   color: #14213D;                     /* navy title */
-  background-color: #E8DCC4;          /* khaki bar behind title */
+  background-color: #FFFFFF;          /* khaki bar behind title */
   font-size: 42px;
   font-weight: bold;
   padding: 20px;
-  border: 3px solid #14213D;
+  border: 3px solid #000000;
   border-radius: 8px;
   letter-spacing: 1px;
 }
@@ -45,7 +45,7 @@ body {
   width: 33%;                         /* each photo takes ~one-third */
   height: 280px;                      /* all photos same height */
   object-fit: cover;                  /* crop to fill, no distortion */
-  border: 4px solid #14213D;          /* navy frame */
+  border: 4px solid #000000;          /* navy frame */
   border-radius: 6px;
   background-color: #FFFFFF;
 }
@@ -54,14 +54,14 @@ body {
 h3 {
   color: #FFFFFF;                     /* white headings on orange */
   font-size: 26px;
-  border-bottom: 2px solid #14213D;
+  border-bottom: 2px solid #000000;
   padding-bottom: 6px;
   margin-top: 30px;
 }
 
 /* ---- About Me paragraph ---- */
 .about-me {
-  background-color: #E8DCC4;          /* khaki "card" */
+  background-color: #FFFFFF;          /* khaki "card" */
   color: #14213D;
   padding: 20px 25px;
   border-radius: 8px;
@@ -91,7 +91,7 @@ h3 {
 
 /* ---- Lists ---- */
 ol, ul {
-  background-color: #E8DCC4;
+  background-color: #FFFFFF;
   color: #14213D;
   padding: 18px 18px 18px 45px;       /* extra left padding for bullets */
   border-radius: 8px;
@@ -110,7 +110,7 @@ a {
 }
 
 a:hover {
-  color: #BF5700;
+  color: #A91B0D;
   background-color: #FFFFFF;
   padding: 1px 3px;
   border-radius: 3px;
@@ -119,7 +119,7 @@ a:hover {
 /* ---- Horizontal rules ---- */
 hr {
   border: none;
-  border-top: 2px dashed #14213D;
+  border-top: 2px dashed #000000;
   margin: 30px 0;
 }
 
@@ -127,7 +127,7 @@ hr {
 .video-grid {
   justify-items: center;
   text-align:center;
-  background-color: #E8DCC4;
+  background-color: #FFFFFF;
   padding: 40px;
   border-radius: 8px;
 }
@@ -136,7 +136,7 @@ hr {
   width: 75%;
   justify-items: center;
   text-align:center;
-  border: 3px solid #14213D;
+  border: 3px solid #000000;
   border-radius: 6px;
   background-color: #14213D;
 }
@@ -159,7 +159,7 @@ hr {
   font-size: 13px;
   margin-top: 40px;
   padding: 15px;
-  border-top: 2px solid #14213D;
+  border-top: 2px solid #000000;
   letter-spacing: 0.5px;
 }
 
